@@ -1,6 +1,8 @@
 import numpy as np
 import networkx as nx
 
+from utils import Weight
+
 
 class GraphWrapper:
     def __init__(self, graph: nx.DiGraph):
@@ -15,6 +17,10 @@ class GraphWrapper:
         graph = nx.DiGraph()
         W = np.zeros(self._get_matrices_shapes(), dtype=np.int)
         D = np.zeros(self._get_matrices_shapes())
+
+        graph.add_weighted_edges_from(
+            [(u, v, Weight(self.graph.edges[u, v]["weight"], -self.delay[v])) for (u, v) in self.graph.edges]
+        )
 
         path_max_len = dict(nx.floyd_warshall(graph))
 
