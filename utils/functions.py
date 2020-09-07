@@ -1,5 +1,6 @@
 import networkx as nx
-
+import numpy as np
+from utils import Weight
 
 def get_matrices_shapes(graph, np_matrix):
     num_nodes = graph.number_of_nodes()
@@ -33,3 +34,23 @@ def cp_min_clock(graph) -> float:
         delta_vertices[v] = max_incoming_u_delta + v["delay"]
 
     return max(delta_vertices.values())
+
+
+def calculate_WD(self) -> (np.array, np.array):
+    graph = nx.DiGraph()
+    W = np.zeros(get_matrices_shapes(self.graph, np), dtype=np.int)
+    D = np.zeros(get_matrices_shapes(self.graph, np))
+
+    graph.add_weighted_edges_from(
+        [(u, v, Weight(self.graph.edges[u, v]["weight"], -self.delay[v])) for (u, v) in self.graph.edges]
+    )
+
+    path_max_len = dict(nx.floyd_warshall(graph))
+
+    for u in graph.nodes:
+        for v in graph.nodes:
+            cw = path_max_len[u][v]
+            W[int(u), int(v)] = cw.x
+            D[int(u), int(v)] = self.delay[v] - cw.y
+
+    return W, D

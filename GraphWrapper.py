@@ -2,6 +2,7 @@ import numpy as np
 import networkx as nx
 
 from utils import Weight
+from utils.functions import cp_delta, get_matrices_shapes
 
 
 class GraphWrapper:
@@ -13,25 +14,22 @@ class GraphWrapper:
     def fill_WD(self):
         self.W_matrix, self.D_matrix = self._calculate_WD()
 
-    def _calculate_WD(self) -> (np.array, np.array):
-        graph = nx.DiGraph()
-        W = np.zeros(self._get_matrices_shapes(), dtype=np.int)
-        D = np.zeros(self._get_matrices_shapes())
 
-        graph.add_weighted_edges_from(
-            [(u, v, Weight(self.graph.edges[u, v]["weight"], -self.delay[v])) for (u, v) in self.graph.edges]
-        )
 
-        path_max_len = dict(nx.floyd_warshall(graph))
+    def calc_feas(self, var):
+        r_list = []
+        graph_r = self.graph.copy()
 
-        for u in graph.nodes:
-            for v in graph.nodes:
-                cw = path_max_len[u][v]
-                W[int(u), int(v)] = cw.x
-                D[int(u), int(v)] = self.delay[v] - cw.y
+        for i in range(len(self.graph.nodes) - 1):
+            r = {}
+            delta = cp_delta(graph_r)
 
-        return W, D
+            for vertex in delta.keys():
+                if delta[vertex] > var:
+                    r[vertex] = r.get(vertex, 0) + 1
 
-    def _get_matrices_shapes(self):
-        num_nodes = self.graph.number_of_nodes()
-        return np.shape(num_nodes, num_nodes)
+            graph_r = get_retimed_graph(graph_r, r)
+            r_list.append(r)
+
+        r_final = merge_r_list(r_list)
+        delta, cp = cp_
