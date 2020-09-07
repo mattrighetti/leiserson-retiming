@@ -2,6 +2,7 @@ import networkx as nx
 import numpy as np
 from utils import Weight
 
+
 def get_matrices_shapes(graph, np_matrix):
     num_nodes = graph.number_of_nodes()
     return np_matrix.shape(num_nodes, num_nodes)
