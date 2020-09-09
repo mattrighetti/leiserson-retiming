@@ -1,4 +1,5 @@
 import networkx as nx
+import numpy as np
 from utils.WDPair import WDPair
 
 __all__ = ['wd']
