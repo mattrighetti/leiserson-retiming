@@ -1,12 +1,9 @@
 import networkx as nx
 
-
-def get_matrices_shapes(graph, np_matrix):
-    num_nodes = graph.number_of_nodes()
-    return np_matrix.shape(num_nodes, num_nodes)
+__all__ = ['cp_min_clock']
 
 
-def cp_min_clock(graph) -> float:
+def cp_min_clock(graph: nx.DiGraph) -> float:
     zero_edges_subgraph = nx.DiGraph()
 
     zero_edges = []
