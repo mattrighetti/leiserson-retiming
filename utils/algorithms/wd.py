@@ -13,7 +13,7 @@ def wd(graph: nx.DiGraph) -> (np.array, np.array):
     D = np.empty([graph.number_of_nodes(), graph.number_of_nodes()])
 
     copy_graph.add_weighted_edges_from(
-        [(u, v, WDPair(graph.edges[u, v]["weight"], -delay[u])) for (u, v) in graph.edges]
+        [(u, v, WDPair(graph.edges[u, v]['weight'], -delay[u])) for (u, v) in graph.edges]
     )
 
     shortest_path_len = dict(floyd_warshall_predecessor_and_distance(copy_graph)[1])
@@ -54,4 +54,5 @@ def floyd_warshall_predecessor_and_distance(G, weight='weight'):
                 if dist_u[v] > d:
                     dist_u[v] = d
                     pred[u][v] = pred[w][v]
+
     return dict(pred), dict(dist)

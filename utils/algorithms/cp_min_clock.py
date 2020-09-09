@@ -9,7 +9,7 @@ def cp_min_clock(graph: nx.DiGraph) -> float:
     zero_edges = []
     non_zero_edges = []
     for edge in graph.edges:
-        if edge["weight"] == 0:
+        if edge['weight'] == 0:
             zero_edges.append(edge)
         else:
             non_zero_edges.append(edge)
@@ -27,6 +27,6 @@ def cp_min_clock(graph: nx.DiGraph) -> float:
             if delta_vertices[u] > max_incoming_u_delta:
                 max_incoming_u_delta = delta_vertices[u]
 
-        delta_vertices[v] = max_incoming_u_delta + v["delay"]
+        delta_vertices[v] = max_incoming_u_delta + v['delay']
 
     return max(delta_vertices.values())
