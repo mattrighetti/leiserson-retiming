@@ -8,9 +8,10 @@ __all__ = ['wd']
 def wd(graph: nx.DiGraph) -> (np.array, np.array):
     copy_graph = nx.DiGraph()
     delay = nx.get_node_attributes(graph, 'delay')
+    n = graph.number_of_nodes()
 
-    W = np.empty([graph.number_of_nodes(), graph.number_of_nodes()], dtype=np.int)
-    D = np.empty([graph.number_of_nodes(), graph.number_of_nodes()])
+    W = np.empty([n, n], dtype=np.int)
+    D = np.empty([n, n])
 
     copy_graph.add_weighted_edges_from(
         [(u, v, WDPair(graph.edges[u, v]['weight'], -delay[u])) for (u, v) in graph.edges]
@@ -28,12 +29,13 @@ def wd(graph: nx.DiGraph) -> (np.array, np.array):
 
 
 def floyd_warshall_predecessor_and_distance(G, weight='weight'):
-    """Find all-pairs shortest path lengths using Floyd's algorithm.
+    """
+    Find all-pairs shortest path lengths using Floyd's algorithm.
     """
     from collections import defaultdict
     dist = defaultdict(lambda: defaultdict(lambda: WDPair(float('inf'), float('inf'))))
     for u in G:
-        dist[u][u] = WDPair(0.0, 0.0)
+        dist[u][u] = WDPair(0, 0)
     pred = defaultdict(dict)
     # initialize path distance dictionary to be the adjacency matrix
     # also set the distance to self to 0 (zero diagonal)
