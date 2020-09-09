@@ -1,4 +1,4 @@
-class Weight:
+class WDPair:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -12,4 +12,4 @@ class Weight:
         if isinstance(other, int):
             return self
         else:
-            return Weight(self.x + other.x, self.y + other.y)
+            return WDPair(self.x + other.x, self.y + other.y)
