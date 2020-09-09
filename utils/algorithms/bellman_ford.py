@@ -19,32 +19,34 @@ def binary_search(graph: nx.DiGraph, D_sorted, W):
     high = len(D_sorted) - 1
     mid = 0
 
+    tuple_ = (np.inf, None)
+
     while low <= high:
         mid = (high + low) // 2
 
         results = bf_algorithm_test(graph, D_sorted, W, D_sorted[mid])
 
         if results['valid']:
-            return results
+            tuple_ = (D_sorted[mid], results['r'])
+            high = mid - 1
         else:
             low = mid + 1
 
-    raise Exception("Could not find a legal retiming")
+    return tuple_[0], tuple_[1]
 
 
 def bf_algorithm_test(graph: nx.DiGraph, D_sorted, W, clock_period):
-    valid = False
     retiming_value = None
-
     constraint_graph = generate_constraint_graph(graph, D_sorted, W, clock_period)
 
     try:
         retiming_value, not_care = nx.algorithms.single_source_bellman_ford(constraint_graph, 'N+1')
         valid = True
     except nx.exception.NetworkXError:
+        valid = False
         print("Exception NetworkXError launched in bf_algorithm_test")
 
-    return {'valid': valid, 'r': retiming_value}
+    return {'valid': valid, 'r': retiming_value, 'clock_period': clock_period}
 
 
 def generate_constraint_graph(graph: nx.DiGraph, D_sorted, W, clock_period) -> nx.DiGraph:
