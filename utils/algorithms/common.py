@@ -1,7 +1,8 @@
 import networkx as nx
 
 __all__ = ['apply_retiming',
-           'get_subgraph_with_weight']
+           'get_subgraph_with_weight',
+           'check_if_legal']
 
 
 def apply_retiming(graph: nx.DiGraph, r) -> nx.DiGraph:
@@ -9,6 +10,10 @@ def apply_retiming(graph: nx.DiGraph, r) -> nx.DiGraph:
 
     retimed_graph.add_weighted_edges_from(
         [(u, v, graph.edges[u, v]['weight'] + r.get(v, 0) - r.get(u, 0)) for (u, v) in graph.edges]
+    )
+
+    retimed_graph.add_nodes_from(
+        [(node, {'delay': graph.nodes[node]['delay']}) for node in graph.nodes]
     )
 
     return retimed_graph
