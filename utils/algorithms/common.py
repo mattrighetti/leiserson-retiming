@@ -14,6 +14,14 @@ def apply_retiming(graph: nx.DiGraph, r) -> nx.DiGraph:
     return retimed_graph
 
 
+def check_if_legal(graph: nx.DiGraph) -> bool:
+    for edge in graph.edges:
+        if graph.edges[edge]['weight'] < 0:
+            return False
+
+    return True
+
+
 def get_subgraph_with_weight(graph: nx.DiGraph, weight, copy=True) -> nx.DiGraph:
     weight_mask = graph.edges['weight'] == weight
 
