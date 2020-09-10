@@ -15,7 +15,7 @@ def opt1(graph: nx.DiGraph):
 
     # 3. Binary search minimum clock period in D(u, v) values using Bellman-Ford algorithm
     #     to check if Theorem 7 can be satisfied
-    min_clock_period, retiming = binary_search(graph, sorted_D, W)
+    min_clock_period, retiming = binary_search(graph, sorted_D, W, D)
 
     # 4. For the minimum found before, use values of r(u) found by Bellman-Ford as the optimal retiming
     return min_clock_period, retiming
