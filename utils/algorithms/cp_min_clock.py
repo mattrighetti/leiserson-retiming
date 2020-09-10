@@ -3,7 +3,7 @@ import networkx as nx
 __all__ = ['cp_min_clock']
 
 
-def cp_min_clock(graph: nx.DiGraph) -> float:
+def cp(graph: nx.DiGraph) -> float:
     zero_edges_subgraph = nx.DiGraph()
 
     zero_edges = []
