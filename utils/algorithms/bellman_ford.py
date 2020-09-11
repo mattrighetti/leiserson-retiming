@@ -18,7 +18,6 @@ def binary_search(graph: nx.DiGraph, D_sorted, W, D):
     """
     low = 0
     high = len(D_sorted) - 1
-    mid = 0
 
     tuple_ = (np.inf, None)
 

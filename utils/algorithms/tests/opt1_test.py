@@ -1,5 +1,5 @@
-import networkx as nx
 import pytest
+import networkx as nx
 from utils.algorithms.opt1 import opt1
 
 
