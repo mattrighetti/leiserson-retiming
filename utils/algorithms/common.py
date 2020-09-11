@@ -9,7 +9,7 @@ def apply_retiming(graph: nx.DiGraph, r) -> nx.DiGraph:
     retimed_graph = nx.DiGraph()
 
     retimed_graph.add_weighted_edges_from(
-        [(u, v, graph.edges[u, v]['weight'] + r.get(v, 0) - r.get(u, 0)) for (u, v) in graph.edges]
+        [(u, v, graph.edges[u, v]['weight'] + r[v] - r[u]) for (u, v) in graph.edges]
     )
 
     retimed_graph.add_nodes_from(
