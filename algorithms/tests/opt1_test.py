@@ -68,6 +68,6 @@ def test_opt1():
 
 
 def test_random_opt1():
-    for n in [10, 100, 1000]:
+    for n in [10, 100, 500]:
         graph = generate_all_weight_one_graph(n)
         assert opt1(graph)[0] == max(nx.get_node_attributes(graph, 'delay').values())
