@@ -1,7 +1,7 @@
 import networkx as nx
 import numpy as np
-from utils.algorithms.wd import wd
-from utils.algorithms.bellman_ford import binary_search
+from algorithms.wd import wd
+from algorithms.bellman_ford import binary_search
 
 __all__ = ['opt1']
 

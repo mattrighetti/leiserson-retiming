@@ -1,7 +1,7 @@
 import pytest
 import networkx as nx
-from utils.algorithms.opt2 import opt2
-from utils.algorithms.test_generators import generate_all_weight_one_graph
+from algorithms.opt2 import opt2
+from algorithms.test_generators import generate_all_weight_one_graph
 
 
 def test_opt2():

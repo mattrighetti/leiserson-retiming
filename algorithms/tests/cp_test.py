@@ -1,6 +1,6 @@
 import networkx as nx
-from utils.algorithms.clock_period import *
-from utils.algorithms.test_generators import generate_single_register_graph
+from algorithms.clock_period import *
+from algorithms.test_generators import generate_single_register_graph
 
 
 def test_cp():

@@ -1,7 +1,7 @@
 import numpy as np
 import networkx as nx
-from utils.algorithms.common import apply_retiming
-from utils.algorithms.clock_period import delta_cp, cp
+from algorithms.common import apply_retiming
+from algorithms.clock_period import delta_cp, cp
 
 __all__ = ['binary_search']
 

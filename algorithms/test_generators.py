@@ -1,6 +1,6 @@
 import networkx as nx
 from random import randint
-from utils.algorithms.common import remove_cycles
+from algorithms.common import remove_cycles
 
 __all__ = ['generate_single_register_graph',
            'generate_all_weight_one_graph',

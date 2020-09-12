@@ -1,8 +1,7 @@
 import pytest
 import networkx as nx
-from utils.algorithms.opt1 import opt1
-from utils.algorithms.clock_period import cp
-from utils.algorithms.test_generators import generate_all_weight_one_graph
+from algorithms.opt1 import opt1
+from algorithms.test_generators import generate_all_weight_one_graph
 
 
 def test_opt1():

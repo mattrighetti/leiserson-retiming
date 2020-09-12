@@ -1,5 +1,4 @@
-import networkx as nx
-from utils.algorithms.test_generators import *
+from algorithms.test_generators import *
 
 
 def test_all_weight_one():
