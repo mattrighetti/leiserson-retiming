@@ -3,7 +3,8 @@ from random import randint
 from algorithms.common import remove_backward_cycles
 
 __all__ = ['generate_all_weight_one_graph',
-           'check_legality']
+           'check_legality',
+           'get_random_retiming']
 
 
 def generate_all_weight_one_graph(num_nodes=10, p=0.25) -> nx.DiGraph:
@@ -29,3 +30,27 @@ def check_legality(graph: nx.DiGraph) -> bool:
             return False
 
     return True
+
+
+def get_random_retiming(graph: nx.DiGraph) -> dict:
+    r = dict([(node, 0) for node in graph.nodes])
+
+    for node in graph.nodes:
+        in_list = [e for e in graph.in_edges(node)]
+        out_list = [e for e in graph.out_edges(node)]
+
+        low = [weight - r[u] for ((u, v), weight) in nx.get_edge_attributes(graph, 'weight').items() if (u, v) in in_list]
+        high = [weight + r[v] for ((u, v), weight) in nx.get_edge_attributes(graph, 'weight').items() if (u, v) in out_list]
+
+        min_low = 0
+        min_high = 0
+
+        if len(low) > 0:
+            min_low = -min(low)
+
+        if len(high) > 0:
+            min_high = min(high)
+
+        r[node] = randint(min_low, min_high)
+
+    return r
