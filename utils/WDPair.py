@@ -3,6 +3,9 @@ class WDPair:
         self.x = x
         self.y = y
 
+    def __eq__(self, other):
+        return self.y == other.y and self.x == other.x
+
     def __lt__(self, other):
         if self.x == other.x:
             return self.y < other.y
