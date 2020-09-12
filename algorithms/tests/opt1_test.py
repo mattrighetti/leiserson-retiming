@@ -1,7 +1,8 @@
 import pytest
 import networkx as nx
 from algorithms.opt1 import opt1
-from algorithms.test_generators import generate_all_weight_one_graph
+from algorithms.common import apply_retiming
+from algorithms.test_generators import generate_all_weight_one_graph, get_random_retiming
 
 
 def test_opt1():
@@ -68,6 +69,15 @@ def test_opt1():
 
 
 def test_random_opt1():
-    for n in [10, 100, 500]:
-        graph = generate_all_weight_one_graph(n)
-        assert opt1(graph)[0] == max(nx.get_node_attributes(graph, 'delay').values())
+    for n in [10, 30, 60, 90, 100]:
+        for p in [0.01, 0.1, 0.4, 0.7, 0.9, 1.0]:
+            graph = generate_all_weight_one_graph(n, p)
+            opt1_result = opt1(graph)[0]
+            assert opt1_result == max(nx.get_node_attributes(graph, 'delay').values())
+
+            for _ in range(5):
+                r = get_random_retiming(graph)
+                g_r = apply_retiming(graph, r)
+                opt1_r_result = opt1(g_r)[0]
+
+                assert opt1_result == opt1_r_result
