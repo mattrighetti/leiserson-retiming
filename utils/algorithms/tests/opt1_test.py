@@ -1,6 +1,8 @@
 import pytest
 import networkx as nx
 from utils.algorithms.opt1 import opt1
+from utils.algorithms.clock_period import cp
+from utils.algorithms.test_generators import generate_all_weight_one_graph
 
 
 def test_opt1():
@@ -64,3 +66,9 @@ def test_opt1():
     values = [0, -1, -1, -2, -2, -2, -1, 0]
     for i in range(len(values)):
         assert result[1][i] == values[i]
+
+
+def test_random_opt1():
+    for n in [10, 100, 1000]:
+        graph = generate_all_weight_one_graph(n)
+        assert opt1(graph)[0] == max(nx.get_node_attributes(graph, 'delay').values())

@@ -1,6 +1,7 @@
 import pytest
 import networkx as nx
 from utils.algorithms.opt2 import opt2
+from utils.algorithms.test_generators import generate_all_weight_one_graph
 
 
 def test_opt2():
@@ -62,3 +63,9 @@ def test_opt2():
     for key in [0, 1, 2, 3, 4, 5, 6, 7]:
         if key not in result[1]:
             pytest.fail(f'{key} was not found in retiming values')
+
+
+def test_random_opt2():
+    for n in [10, 100, 1000]:
+        graph = generate_all_weight_one_graph(n)
+        assert opt2(graph)[0] == max(nx.get_node_attributes(graph, 'delay').values())
