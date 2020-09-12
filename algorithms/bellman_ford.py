@@ -47,14 +47,13 @@ def bf_algorithm_test(graph: nx.DiGraph, W: np.array, D: np.array, clock_period)
         valid = True
     except nx.exception.NetworkXUnbounded:
         valid = False
-        print(f"Negative cost cycle found for clock cycle {clock_period}")
 
     return {'valid': valid, 'r': retiming_value, 'clock_period': clock_period}
 
 
 def generate_constraint_graph(graph: nx.DiGraph, W, D, clock_period) -> nx.DiGraph:
     """
-    Generated a constraint graph to work with the Bellman-Ford algorithm
+    Generates a constraint graph to work with the Bellman-Ford algorithm
 
     source: https://www.oreilly.com/library/view/vlsi-digital-signal/9780471241867/sec-4.3.html
 
