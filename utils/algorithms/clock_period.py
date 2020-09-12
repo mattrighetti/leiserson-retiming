@@ -6,7 +6,7 @@ __all__ = ['cp',
 
 
 def cp(graph: nx.DiGraph) -> float:
-    delta_vertices = delta_cp(graph)
+    delta_vertices = all_delta_cp(graph)
     return max(delta_vertices.values())
 
 
