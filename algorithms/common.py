@@ -3,7 +3,7 @@ import networkx as nx
 __all__ = ['apply_retiming',
            'get_subgraph_with_weight',
            'check_if_legal',
-           'remove_cycles']
+           'remove_backward_cycles']
 
 
 def apply_retiming(graph: nx.DiGraph, r) -> nx.DiGraph:
@@ -28,7 +28,7 @@ def check_if_legal(graph: nx.DiGraph) -> bool:
     return True
 
 
-def remove_cycles(graph):
+def remove_backward_cycles(graph):
     max_node = max(graph.nodes)
     min_node = min(graph.nodes)
 

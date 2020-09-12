@@ -1,6 +1,6 @@
 import networkx as nx
 from random import randint
-from algorithms.common import remove_cycles
+from algorithms.common import remove_backward_cycles
 
 __all__ = ['generate_single_register_graph',
            'generate_all_weight_one_graph',
@@ -21,7 +21,7 @@ def generate_single_register_graph(num_nodes=10, p=0.25) -> nx.DiGraph:
         graph.nodes[node]["delay"] = randint(1, 10)
 
     graph.add_edge(num_nodes - 1, 0, weight=1.0)
-    graph = remove_cycles(graph)
+    graph = remove_backward_cycles(graph)
     return graph
 
 
@@ -38,7 +38,7 @@ def generate_all_weight_one_graph(num_nodes=10, p=0.25) -> nx.DiGraph:
     for node in graph.nodes:
         graph.nodes[node]["delay"] = randint(1, 10)
 
-    graph = remove_cycles(graph)
+    graph = remove_backward_cycles(graph)
     return graph
 
 
