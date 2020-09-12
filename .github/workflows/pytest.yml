@@ -10,20 +10,24 @@ on:
   pull_request:
     branches: [ development ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: GitHub Action for pytest
-        # You may pin to the exact commit or the version.
-        # uses: cclauss/GitHub-Action-for-pytest@5863d02de95f37516a732802fa6257dfdf93e54c
-        uses: cclauss/GitHub-Action-for-pytest@0.5.0
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Test with pytest
+      run: |
+        pytest
