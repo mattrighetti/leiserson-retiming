@@ -1,5 +1,6 @@
 import networkx as nx
 from utils.algorithms.clock_period import *
+from utils.algorithms.test_generators import generate_single_register_graph
 
 
 def test_cp():
@@ -200,3 +201,21 @@ def test_all_cp_delta():
     assert deltas_3[3] == 9.0
     assert deltas_3[4] == 15.0
     assert deltas_3[5] == 22.0
+
+
+def test_random_cp():
+    from functools import reduce
+
+    results = []
+    expected = []
+
+    for n in [5, 10, 100, 1000, 5000]:
+        graph = generate_single_register_graph(num_nodes=n, p=.05)
+        delay_sum = reduce(lambda a, b: (a+b), list(nx.get_node_attributes(graph, 'delay').values()), 0)
+        results.append(cp(graph))
+        expected.append(delay_sum)
+
+    assert len(results) == len(expected)
+
+    for i in range(len(results)):
+        assert results[i] == expected[i]

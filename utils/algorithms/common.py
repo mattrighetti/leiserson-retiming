@@ -2,7 +2,8 @@ import networkx as nx
 
 __all__ = ['apply_retiming',
            'get_subgraph_with_weight',
-           'check_if_legal']
+           'check_if_legal',
+           'remove_cycles']
 
 
 def apply_retiming(graph: nx.DiGraph, r) -> nx.DiGraph:
@@ -25,6 +26,20 @@ def check_if_legal(graph: nx.DiGraph) -> bool:
             return False
 
     return True
+
+
+def remove_cycles(graph):
+    max_node = max(graph.nodes)
+    min_node = min(graph.nodes)
+
+    try:
+        graph.remove_edge(min_node, max_node)
+    except nx.exception.NetworkXError:
+        print("")
+
+    graph.remove_edges_from([(u, v) for (u, v) in graph.edges if u > v and (u, v) != (max_node, min_node)])
+
+    return graph
 
 
 def get_subgraph_with_weight(graph: nx.DiGraph, weight, copy=True) -> nx.DiGraph:
