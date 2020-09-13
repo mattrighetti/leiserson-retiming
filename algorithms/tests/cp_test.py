@@ -1,5 +1,6 @@
 import networkx as nx
-from utils.algorithms.clock_period import *
+from algorithms.clock_period import *
+from algorithms.test_generators import generate_all_weight_one_graph
 
 
 def test_cp():
@@ -200,3 +201,18 @@ def test_all_cp_delta():
     assert deltas_3[3] == 9.0
     assert deltas_3[4] == 15.0
     assert deltas_3[5] == 22.0
+
+
+def test_random_cp():
+    results = []
+    expected = []
+
+    for n in [5, 10, 100, 1000, 5000]:
+        graph = generate_all_weight_one_graph(num_nodes=n, p=.05)
+        results.append(cp(graph))
+        expected.append(max(nx.get_node_attributes(graph, 'delay').values()))
+
+    assert len(results) == len(expected)
+
+    for i in range(len(results)):
+        assert results[i] == expected[i]

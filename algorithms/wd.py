@@ -6,6 +6,13 @@ __all__ = ['wd']
 
 
 def wd(graph: nx.DiGraph) -> (np.array, np.array):
+    """
+    Returns W and D matrix
+
+    :param graph: A directed graph
+    :return: W and D matrix
+    """
+
     copy_graph = nx.DiGraph()
     delay = nx.get_node_attributes(graph, 'delay')
     n = graph.number_of_nodes()
@@ -17,20 +24,25 @@ def wd(graph: nx.DiGraph) -> (np.array, np.array):
         [(u, v, WDPair(graph.edges[u, v]['weight'], -delay[u])) for (u, v) in graph.edges]
     )
 
-    shortest_path_len = dict(floyd_warshall_predecessor_and_distance(copy_graph)[1])
+    shortest_path_len = dict(floyd_warshall_predecessor_and_distance(copy_graph))
 
     for u in copy_graph.nodes:
         for v in copy_graph.nodes:
-            cw = shortest_path_len[u][v]
-            W[int(u), int(v)] = cw.x
-            D[int(u), int(v)] = delay[v] - cw.y
+            obj = shortest_path_len[u][v]
+            W[u, v] = obj.x
+            D[u, v] = delay[v] - obj.y
 
     return W, D
 
 
 def floyd_warshall_predecessor_and_distance(G, weight='weight'):
     """
-    Find all-pairs shortest path lengths using Floyd's algorithm.
+    Convenience method taken from the networkx library and adapted to use WDPair.
+    Finds all-pairs shortest path lengths using Floyd's algorithm.
+
+    :param G: A graph
+    :param weight: Keyword to use for fining shortest paths
+    :return:
     """
     from collections import defaultdict
     dist = defaultdict(lambda: defaultdict(lambda: WDPair(float('inf'), float('inf'))))
@@ -57,4 +69,4 @@ def floyd_warshall_predecessor_and_distance(G, weight='weight'):
                     dist_u[v] = d
                     pred[u][v] = pred[w][v]
 
-    return dict(pred), dict(dist)
+    return dict(dist)

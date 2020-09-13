@@ -1,6 +1,6 @@
 import numpy as np
 import networkx as nx
-from utils.algorithms.wd import wd
+from algorithms.wd import wd
 
 
 def test_wd():

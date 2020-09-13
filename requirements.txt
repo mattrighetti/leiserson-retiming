@@ -1,0 +1,13 @@
+attrs==20.2.0
+decorator==4.4.2
+iniconfig==1.0.1
+more-itertools==8.5.0
+networkx==2.5
+numpy==1.19.2
+packaging==20.4
+pluggy==0.13.1
+py==1.9.0
+pyparsing==2.4.7
+pytest==6.0.2
+six==1.15.0
+toml==0.10.1

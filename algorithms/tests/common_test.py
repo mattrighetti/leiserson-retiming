@@ -1,6 +1,6 @@
 import networkx as nx
 import numpy as np
-from utils.algorithms.common import apply_retiming, check_if_legal
+from algorithms.common import apply_retiming, check_if_legal
 
 
 def test_apply_retiming():
