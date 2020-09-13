@@ -1,21 +1,25 @@
 import networkx as nx
 import numpy as np
+import time
 from algorithms.wd import wd
 from algorithms.binary_search.strategies import *
 
 __all__ = ['opt1', 'opt2']
 
 
-def opt1(graph: nx.DiGraph) -> (float, dict):
+def opt1(graph: nx.DiGraph, W=None, D=None) -> (float, dict):
     """
     Applies OPT1 algorithm to input graph and returns a minimum feasible clock and the retiming values to achieve it
 
     :param graph: A directed graph
+    :param W: W matrix
+    :param D: D matrix
     :return: Minimum feasible clock and the retiming values to achieve it
     """
 
     # 1. Calculate WD
-    W, D = wd(graph)
+    if W is None and D is None:
+        W, D = wd(graph)
 
     # 2. Sort the elements in the range of D
     sorted_D = np.unique(D)
@@ -28,16 +32,22 @@ def opt1(graph: nx.DiGraph) -> (float, dict):
     return min_clock_period, retiming
 
 
-def opt2(graph: nx.DiGraph):
+def opt2(graph: nx.DiGraph, W=None, D=None):
     """
     Applies OPT2 algorithm to input graph and returns a minimum feasible clock and the retiming values to achieve it
 
     :param graph: A directed graph
+    :param W: W matrix
+    :param D: D matrix
     :return: Minimum feasible clock and the retiming values to achieve it
     """
 
     # 1. Calculate WD
-    W, D = wd(graph)
+    if W is None and D is None:
+        i = time.time()
+        W, D = wd(graph)
+        e = time.time()
+        print(f"WD created in {e - i:.2f}s")
 
     # 2. Sort the elements in the range of D
     sorted_D = np.unique(D)

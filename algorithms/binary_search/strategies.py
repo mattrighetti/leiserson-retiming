@@ -16,10 +16,10 @@ def feas(graph: nx.DiGraph, clock_period) -> dict:
     :param clock_period:
     :return:
     """
-    copy_graph = graph.copy()
-    r_vertices = dict([(v, 0.0) for v in copy_graph.nodes])
+    copy_graph = None
+    r_vertices = dict([(v, 0.0) for v in graph.nodes])
 
-    num_vertices = copy_graph.number_of_nodes()
+    num_vertices = graph.number_of_nodes()
 
     # 2. Repeat the following |V| - 1 times
     for _ in range(num_vertices - 1):
