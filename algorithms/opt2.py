@@ -7,6 +7,13 @@ __all__ = ['opt2']
 
 
 def opt2(graph: nx.DiGraph):
+    """
+    Applies OPT2 algorithm to input graph and returns a minimum feasible clock and the retiming values to achieve it
+
+    :param graph: A directed graph
+    :return: Minimum feasible clock and the retiming values to achieve it
+    """
+
     # 1. Calculate WD
     W, D = wd(graph)
 
