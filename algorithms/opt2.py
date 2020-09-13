@@ -1,7 +1,7 @@
 import numpy as np
 import networkx as nx
 from algorithms.wd import wd
-from algorithms.feas import feas
+from algorithms.binary_search.strategies import feas
 
 __all__ = ['opt2']
 

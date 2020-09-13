@@ -1,7 +1,5 @@
 import numpy as np
 
-__all__ = ['binary_search']
-
 
 def binary_search(search_algorithm):
     def bin_search(*args):
