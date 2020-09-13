@@ -144,3 +144,5 @@ dmypy.json
 cython_debug/
 .idea
 
+**/*.csv
+tests_dot
