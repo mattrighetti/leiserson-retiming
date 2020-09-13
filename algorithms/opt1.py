@@ -6,7 +6,14 @@ from algorithms.bellman_ford import binary_search
 __all__ = ['opt1']
 
 
-def opt1(graph: nx.DiGraph):
+def opt1(graph: nx.DiGraph) -> (float, dict):
+    """
+    Applies OPT1 algorithm to input graph and returns a minimum feasible clock and the retiming values to achieve it
+
+    :param graph: A directed graph
+    :return: Minimum feasible clock and the retiming values to achieve it
+    """
+
     # 1. Calculate WD
     W, D = wd(graph)
 
