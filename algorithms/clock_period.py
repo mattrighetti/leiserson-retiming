@@ -1,6 +1,4 @@
 import networkx as nx
-import numpy as np
-import itertools
 
 __all__ = ['cp',
            'delta_cp',
