@@ -4,7 +4,7 @@ import numpy as np
 __all__ = ['binary_search']
 
 
-def binary_search(graph: nx.DiGraph, D_sorted, W, D):
+def binary_search(graph: nx.DiGraph, D_sorted, W, D) -> tuple:
     """
     Binary search feasible clock using Bellman-Ford algorithm
 
@@ -14,7 +14,7 @@ def binary_search(graph: nx.DiGraph, D_sorted, W, D):
     :param D_sorted:
     :param W: W matrix
     :param D: D matrix
-    :return:
+    :return: Tuple that contains the minimum feasible clock period and the retiming values to achieve that
     """
     low = 0
     high = len(D_sorted) - 1
@@ -38,12 +38,21 @@ def binary_search(graph: nx.DiGraph, D_sorted, W, D):
     return tuple_[0], r_values
 
 
-def bf_algorithm_test(graph: nx.DiGraph, W: np.array, D: np.array, clock_period):
+def bf_algorithm_test(graph: nx.DiGraph, W: np.array, D: np.array, clock_period) -> dict:
+    """
+
+    :param graph: A directed graph
+    :param W: W matrix
+    :param D: D matrix
+    :param clock_period: Clock period to test
+    :return: A dictionary containing whether or not a retiming for a certain clock is valid, the retiming value and
+        its clock period
+    """
     retiming_value = None
     constraint_graph = generate_constraint_graph(graph, W, D, clock_period)
 
     try:
-        retiming_value, not_care = nx.algorithms.single_source_bellman_ford(constraint_graph, 'N+1')
+        retiming_value, _ = nx.algorithms.single_source_bellman_ford(constraint_graph, 'N+1')
         valid = True
     except nx.exception.NetworkXUnbounded:
         valid = False
@@ -57,11 +66,11 @@ def generate_constraint_graph(graph: nx.DiGraph, W, D, clock_period) -> nx.DiGra
 
     source: https://www.oreilly.com/library/view/vlsi-digital-signal/9780471241867/sec-4.3.html
 
-    :param graph: original graph
+    :param graph: A directed graph
     :param D: D matrix
     :param W: W matrix
-    :param clock_period: clock_period to test
-    :return: constraint graph
+    :param clock_period: Clock_period to test
+    :return: Constraint graph on which Bellman-Ford algorithm can operate on
     """
     # 1. For each node make an edge with opposite direction
     constraint_graph = graph.reverse(copy=True)
@@ -74,15 +83,37 @@ def generate_constraint_graph(graph: nx.DiGraph, W, D, clock_period) -> nx.DiGra
 
 
 def connect_zero_weight_node(graph: nx.DiGraph) -> nx.DiGraph:
-    original_nodes = np.array(graph.nodes)
+    """
+    Returns a graph containing the same edges and nodes as the one passed as input, plus a node called N+1
+    needed for the Bellman-Ford algorithm. Node N+1 has to be connected with edges to every other node in the graph
+    and those edges must have weight of zero.
 
-    for n in original_nodes:
-        graph.add_edge('N+1', n, weight=0)
+    :param graph: A directed graph
+    :return: A directed graph containing every node and edge as the original one, plus a node N+1 connected
+        to every other node with edges of weight zero
+    """
 
-    return graph
+    copy_graph = graph.copy()
+    copy_graph.add_weighted_edges_from(
+        [('N+1', n, 0.0) for n in copy_graph.nodes]
+    )
+
+    return copy_graph
 
 
 def add_missing_edges(graph: nx.DiGraph, D, W, clock_period) -> nx.DiGraph:
+    """
+    Returns a graph that for each node with D(u, v) > c will have an edge, and will add a weight value of
+    w(e) = W[u, v] - 1 to that edge
+
+    :param graph: A directed graph
+    :param D: D matrix
+    :param W: W matrix
+    :param clock_period: Clock period to test
+    :return: An edited directed graph that will have that for each node with D(u, v) > c will
+        have an edge, and will add a weight value of
+        w(e) = W[u, v] - 1 to that edge
+    """
     n_vertices = len(D)
 
     for i in range(n_vertices):
