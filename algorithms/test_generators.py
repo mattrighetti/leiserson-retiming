@@ -39,8 +39,10 @@ def get_random_retiming(graph: nx.DiGraph) -> dict:
         in_list = [e for e in graph.in_edges(node)]
         out_list = [e for e in graph.out_edges(node)]
 
-        low = [weight - r[u] for ((u, v), weight) in nx.get_edge_attributes(graph, 'weight').items() if (u, v) in in_list]
-        high = [weight + r[v] for ((u, v), weight) in nx.get_edge_attributes(graph, 'weight').items() if (u, v) in out_list]
+        low = [weight - r[u] for ((u, v), weight) in nx.get_edge_attributes(graph, 'weight').items()
+               if (u, v) in in_list]
+        high = [weight + r[v] for ((u, v), weight) in nx.get_edge_attributes(graph, 'weight').items()
+                if (u, v) in out_list]
 
         min_low = 0
         min_high = 0
