@@ -1,6 +1,8 @@
 import os
 import time
 import os.path
+from datetime import date, datetime
+
 import numpy as np
 from os import path
 import networkx as nx
@@ -30,7 +32,16 @@ def create_graph_files():
 def test_opts():
     current_dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'tests_dot'))
 
-    with open('../../performance.csv', 'a') as ww:
+    dir_path = '../../results/'
+    result_file = f'{dir_path}performance_{datetime.now().strftime("%H_%M_%S")}.csv'
+
+    if not path.exists('../../results/'):
+        os.makedirs(dir_path)
+
+    if not path.exists(result_file):
+        open(result_file, 'w').close()
+
+    with open(result_file, 'w+') as ww:
         for file in os.listdir(current_dir_path):
             print("Testing ", file)
             graph = nx.DiGraph(read_graph_from_file(current_dir_path + '/' + file))
