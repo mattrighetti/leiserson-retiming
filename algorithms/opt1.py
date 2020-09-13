@@ -1,7 +1,7 @@
 import networkx as nx
 import numpy as np
 from algorithms.wd import wd
-from algorithms.bellman_ford import binary_search
+from algorithms.bellman_ford import bf_algorithm_test
 
 __all__ = ['opt1']
 
@@ -22,7 +22,7 @@ def opt1(graph: nx.DiGraph) -> (float, dict):
 
     # 3. Binary search minimum clock period in D(u, v) values using Bellman-Ford algorithm
     #     to check if Theorem 7 can be satisfied
-    min_clock_period, retiming = binary_search(graph, sorted_D, W, D)
+    min_clock_period, retiming = bf_algorithm_test(graph, sorted_D, W, D)
 
     # 4. For the minimum found before, use values of r(u) found by Bellman-Ford as the optimal retiming
     return min_clock_period, retiming

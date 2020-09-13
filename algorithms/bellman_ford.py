@@ -1,44 +1,46 @@
 import networkx as nx
 import numpy as np
+from algorithms.binary_search import binary_search
 
-__all__ = ['binary_search']
-
-
-def binary_search(graph: nx.DiGraph, D_sorted, W, D) -> tuple:
-    """
-    Binary search feasible clock using Bellman-Ford algorithm
-
-    source: http://recipe.ee.ntu.edu.tw/LabWebsite/miniworkshop_Opt+App/Session%204-1%20JHJiang%20[相容模式].pdf
-
-    :param graph:
-    :param D_sorted:
-    :param W: W matrix
-    :param D: D matrix
-    :return: Tuple that contains the minimum feasible clock period and the retiming values to achieve that
-    """
-    low = 0
-    high = len(D_sorted) - 1
-
-    tuple_ = (np.inf, None)
-
-    while low <= high:
-        mid = (high + low) // 2
-
-        results = bf_algorithm_test(graph, W, D, D_sorted[mid])
-
-        if results['valid']:
-            tuple_ = (D_sorted[mid], results['r'])
-            high = mid - 1
-        else:
-            low = mid + 1
-
-    r_values = tuple_[1]
-    r_values.pop('N+1')
-
-    return tuple_[0], r_values
+__all__ = ['binary_search', 'bf_algorithm_test']
 
 
-def bf_algorithm_test(graph: nx.DiGraph, W: np.array, D: np.array, clock_period) -> dict:
+# def binary_search(graph: nx.DiGraph, D_sorted, W, D) -> tuple:
+#     """
+#     Binary search feasible clock using Bellman-Ford algorithm
+#
+#     source: http://recipe.ee.ntu.edu.tw/LabWebsite/miniworkshop_Opt+App/Session%204-1%20JHJiang%20[相容模式].pdf
+#
+#     :param graph:
+#     :param D_sorted:
+#     :param W: W matrix
+#     :param D: D matrix
+#     :return: Tuple that contains the minimum feasible clock period and the retiming values to achieve that
+#     """
+#     low = 0
+#     high = len(D_sorted) - 1
+#
+#     tuple_ = (np.inf, None)
+#
+#     while low <= high:
+#         mid = (high + low) // 2
+#
+#         results = bf_algorithm_test(graph, D_sorted[mid], W, D)
+#
+#         if results['valid']:
+#             tuple_ = (D_sorted[mid], results['r'])
+#             high = mid - 1
+#         else:
+#             low = mid + 1
+#
+#     r_values = tuple_[1]
+#     r_values.pop('N+1')
+#
+#     return tuple_[0], r_values
+
+
+@binary_search
+def bf_algorithm_test(graph: nx.DiGraph, clock_period, W: np.array, D: np.array) -> dict:
     """
 
     :param graph: A directed graph
@@ -54,6 +56,7 @@ def bf_algorithm_test(graph: nx.DiGraph, W: np.array, D: np.array, clock_period)
     try:
         retiming_value, _ = nx.algorithms.single_source_bellman_ford(constraint_graph, 'N+1')
         valid = True
+        retiming_value.pop('N+1')
     except nx.exception.NetworkXUnbounded:
         valid = False
 
