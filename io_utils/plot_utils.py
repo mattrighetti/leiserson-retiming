@@ -31,7 +31,7 @@ def read_graph_from_file(file_path: str) -> nx.DiGraph:
         raise FileNotFoundError
 
     with open(file_path, 'r') as file:
-        graph = nx.nx_pydot.read_dot(file)
+        graph = nx.nx_agraph.read_dot(file)
 
     graph = nx.convert_node_labels_to_integers(graph)
     float_delay_dict = dict([(k, float(v)) for k, v in nx.get_node_attributes(graph, 'delay').items()])
