@@ -11,6 +11,8 @@ def opt1(graph: nx.DiGraph, W=None, D=None) -> (float, dict):
     """
     Applies OPT1 algorithm to input graph and returns a minimum feasible clock and the retiming values to achieve it
 
+    Implementation: https://github.com/MattRighetti/leiserson-retiming/wiki/OPT1
+
     :param graph: A directed graph
     :param W: W matrix
     :param D: D matrix
@@ -35,6 +37,8 @@ def opt1(graph: nx.DiGraph, W=None, D=None) -> (float, dict):
 def opt2(graph: nx.DiGraph, W=None, D=None):
     """
     Applies OPT2 algorithm to input graph and returns a minimum feasible clock and the retiming values to achieve it
+
+    Implementation: https://github.com/MattRighetti/leiserson-retiming/wiki/OPT2
 
     :param graph: A directed graph
     :param W: W matrix
