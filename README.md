@@ -1,4 +1,4 @@
-# Retiming Graph Algorithm
+# Retiming Algorithms
 
 This project was an assignment of the **Advanced Algorithms and Parallel Programming** 2019-2020 course at Politecnico di Milano
 
