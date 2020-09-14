@@ -25,7 +25,7 @@ def generate_all_weight_one_graph(num_nodes=10, p=0.25) -> nx.DiGraph:
         graph.edges[edge]["weight"] = 1.0
 
     for node in graph.nodes:
-        graph.nodes[node]["delay"] = randint(1, 10)
+        graph.nodes[node]["delay"] = randint(1, 1000)
 
     graph = remove_backward_cycles(graph)
     return graph
