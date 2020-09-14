@@ -111,7 +111,7 @@ def add_missing_edges(graph: nx.DiGraph, D, W, clock_period) -> nx.DiGraph:
     :param D: D matrix
     :param W: W matrix
     :param clock_period: Clock period to test
-    :return: An edited directed graph that will have that for each node with D(u, v) > c will
+    :return: An edited directed graph that for each node with D(u, v) > c will
         have an edge, and will add a weight value of
         w(e) = W[u, v] - 1 to that edge
     """
