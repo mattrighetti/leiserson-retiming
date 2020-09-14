@@ -12,6 +12,8 @@ def feas(graph: nx.DiGraph, clock_period) -> dict:
     """
     Applies FEAS algorithm to input graph with a specified clock and returns a retiming dictionary to achieve it
 
+    Implementation: https://github.com/MattRighetti/leiserson-retiming/wiki/FEAS
+
     :param graph:
     :param clock_period:
     :return:

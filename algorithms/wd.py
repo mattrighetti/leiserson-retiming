@@ -9,6 +9,8 @@ def wd(graph: nx.DiGraph) -> (np.array, np.array):
     """
     Generated W and D matrices needed for OPT1 and OPT2
 
+    Implementation: https://github.com/MattRighetti/leiserson-retiming/wiki/WD
+
     :param graph: A directed graph
     :return: W and D matrix
     """
