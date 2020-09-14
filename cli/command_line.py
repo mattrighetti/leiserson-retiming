@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import sys
+import os
+from os import path
 import numpy as np
 import networkx as nx
 from algorithms.wd import wd
@@ -8,15 +10,23 @@ from io_utils.plot_utils import *
 from algorithms.retiming.strategies import *
 from algorithms.common import apply_retiming
 
-if len(sys.argv) < 5:
-    print("arguments must be: <input_graph> <output_wd_matrix> <output_retimed_graph_opt1> <output_retimed_graph_opt2>")
+if len(sys.argv) < 3:
+    print("arguments must be: <input_graph> <output_folder>")
     sys.exit(-1)
 
 file_in_graph = sys.argv[1]
-w_out = sys.argv[2]
-d_out = sys.argv[3]
-out_graph_opt1 = sys.argv[4]
-out_graph_opt2 = sys.argv[5]
+out_folder = sys.argv[2].replace(' ', '')
+
+if out_folder[-1] != '/':
+    out_folder += '/'
+
+if not path.exists(out_folder):
+    os.makedirs(out_folder)
+
+w_out = out_folder + "w"
+d_out = out_folder + "d"
+out_graph_opt1 = out_folder + "opt1"
+out_graph_opt2 = out_folder + "opt2"
 
 print(f'Reading graph from {file_in_graph}')
 graph = read_graph_from_file(file_in_graph)
