@@ -6,11 +6,27 @@ __all__ = ['save_graph_to_file',
 
 
 def save_graph_to_file(graph: nx.DiGraph, file_path: str) -> None:
+    """
+    Saves graph to a file named `file_path`
+
+    :param graph: Graph to be saved
+    :param file_path: File path where you would like to save the graph
+    :return: None
+    """
     with open(file_path, 'w') as file:
         nx.nx_pydot.write_dot(graph, file)
 
 
 def read_graph_from_file(file_path: str) -> nx.DiGraph:
+    """
+    Reads a graph from file that has
+    - delay attributes as float
+    - weight attributes as int
+    - node labels as int
+
+    :param file_path: File path of the graph file
+    :return: Graph read from file
+    """
     if not path.exists(file_path):
         raise FileNotFoundError
 
