@@ -16,10 +16,10 @@ def feas(graph: nx.DiGraph, clock_period) -> dict:
     :param clock_period:
     :return:
     """
-    copy_graph = graph.copy()
-    r_vertices = dict([(v, 0.0) for v in copy_graph.nodes])
+    copy_graph = None
+    r_vertices = dict([(v, 0.0) for v in graph.nodes])
 
-    num_vertices = copy_graph.number_of_nodes()
+    num_vertices = graph.number_of_nodes()
 
     # 2. Repeat the following |V| - 1 times
     for _ in range(num_vertices - 1):
@@ -111,7 +111,7 @@ def add_missing_edges(graph: nx.DiGraph, D, W, clock_period) -> nx.DiGraph:
     :param D: D matrix
     :param W: W matrix
     :param clock_period: Clock period to test
-    :return: An edited directed graph that will have that for each node with D(u, v) > c will
+    :return: An edited directed graph that for each node with D(u, v) > c will
         have an edge, and will add a weight value of
         w(e) = W[u, v] - 1 to that edge
     """

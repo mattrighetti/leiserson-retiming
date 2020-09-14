@@ -2,6 +2,13 @@ import numpy as np
 
 
 def binary_search(search_algorithm):
+    """
+    Binary search meant to be used as a decorator for algorithms OPT1 and OPT2
+
+    :param search_algorithm: OPT1 or OPT2 algorithms
+    :return:
+    """
+
     def bin_search(*args):
         low = 0
         high = len(args[1]) - 1

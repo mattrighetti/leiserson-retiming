@@ -7,21 +7,21 @@ __all__ = ['wd']
 
 def wd(graph: nx.DiGraph) -> (np.array, np.array):
     """
-    Returns W and D matrix
+    Generated W and D matrices needed for OPT1 and OPT2
 
     :param graph: A directed graph
     :return: W and D matrix
     """
 
     copy_graph = nx.DiGraph()
-    delay = nx.get_node_attributes(graph, 'delay')
+    node_delays = nx.get_node_attributes(graph, 'delay')
     n = graph.number_of_nodes()
 
     W = np.empty([n, n], dtype=np.int)
     D = np.empty([n, n])
 
     copy_graph.add_weighted_edges_from(
-        [(u, v, WDPair(graph.edges[u, v]['weight'], -delay[u])) for (u, v) in graph.edges]
+        [(u, v, WDPair(graph.edges[u, v]['weight'], -node_delays[u])) for (u, v) in graph.edges]
     )
 
     shortest_path_len = dict(floyd_warshall_predecessor_and_distance(copy_graph))
@@ -30,7 +30,7 @@ def wd(graph: nx.DiGraph) -> (np.array, np.array):
         for v in copy_graph.nodes:
             obj = shortest_path_len[u][v]
             W[u, v] = obj.x
-            D[u, v] = delay[v] - obj.y
+            D[u, v] = node_delays[v] - obj.y
 
     return W, D
 
@@ -47,7 +47,7 @@ def floyd_warshall_predecessor_and_distance(G, weight='weight'):
     from collections import defaultdict
     dist = defaultdict(lambda: defaultdict(lambda: WDPair(float('inf'), float('inf'))))
     for u in G:
-        dist[u][u] = WDPair(0, 0)
+        dist[u][u] = WDPair(0.0, 0.0)
     pred = defaultdict(dict)
     # initialize path distance dictionary to be the adjacency matrix
     # also set the distance to self to 0 (zero diagonal)
